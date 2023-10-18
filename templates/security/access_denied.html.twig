@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès refusé{% endblock %}
+{% block body %}
+    <h1>Accès refusé</h1>
+    <p>Vous n'avez pas les droits nécessaires pour accéder à cette page.</p>
+    <a href="{% url 'login' %}">Retour à la page de connexion</a>
+{% endblock %}
