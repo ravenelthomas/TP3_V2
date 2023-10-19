@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!
+{% endblock %}
+{% block body %}
+    <h1>Gérer les utilisateurs</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Mail</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+{% for user in users %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.surname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.roles[0] }}</td>
+            <td><a href="/admin/edit_user/{{ user.id }}">Edit</a> | <a href="/admin/delete_user/{{ user.id }}">Delete</a></td>
+        </tr>
+{% endfor %}
+    </table>
+    {# {{dump(users)}} #}
+{% endblock %}
+
