@@ -37,9 +37,9 @@ class RegistrationController extends AbstractController
 
             // check the role of the user and redirect accordingly
             if (in_array('ADMIN', $user->getRoles())) {
-                return $this->redirectToRoute('admin_dashboard');
+                return $this->redirectToRoute('admin_route');
             } else {
-                return $this->redirectToRoute('user_dashboard');
+                return $this->redirectToRoute('user_route');
             }
         }
 

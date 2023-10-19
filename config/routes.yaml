@@ -4,10 +4,15 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-admin_dashboard:
-    path: /admin
-    controller: App\Controller\AdminController::dashboard
-
-user_dashboard:
+root:
     path: /
+    controller: App\Controller\SecurityController::login
+    
+admin_route:
+    path: /admin
+    controller: App\Controller\AdminController::index
+
+user_route:
+    path: /user
     controller: App\Controller\UserController::index
+
