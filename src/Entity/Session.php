@@ -39,7 +39,10 @@ class Session
     {
         $this->tasks = new ArrayCollection();
     }
-
+    public function __toString(): string
+    {
+        return $this->getIdUser()->getName() . ' ' . $this->getIdUser()->getSurname() . ' ' . $this->getStartSession()->format('Y-m-d H:i:s');
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -134,4 +137,5 @@ class Session
 
         return $this;
     }
+
 }

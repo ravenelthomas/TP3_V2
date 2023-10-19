@@ -12,7 +12,7 @@ class TaskControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private TaskRepository $repository;
-    private string $path = '/task/';
+    private string $path = '/admin/task/';
     private EntityManagerInterface $manager;
 
     protected function setUp(): void
@@ -51,7 +51,7 @@ class TaskControllerTest extends WebTestCase
             'task[id_session]' => 'Testing',
         ]);
 
-        self::assertResponseRedirects('/task/');
+        self::assertResponseRedirects('/admin/task/');
 
         self::assertSame($originalNumObjectsInRepository + 1, count($this->repository->findAll()));
     }
@@ -94,7 +94,7 @@ class TaskControllerTest extends WebTestCase
             'task[id_session]' => 'Something New',
         ]);
 
-        self::assertResponseRedirects('/task/');
+        self::assertResponseRedirects('/admin/task/');
 
         $fixture = $this->repository->findAll();
 
@@ -123,6 +123,6 @@ class TaskControllerTest extends WebTestCase
         $this->client->submitForm('Delete');
 
         self::assertSame($originalNumObjectsInRepository, count($this->repository->findAll()));
-        self::assertResponseRedirects('/task/');
+        self::assertResponseRedirects('/admin/task/');
     }
 }

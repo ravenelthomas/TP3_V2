@@ -12,7 +12,7 @@ class SessionControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private SessionRepository $repository;
-    private string $path = '/session/';
+    private string $path = '/admin/session/';
     private EntityManagerInterface $manager;
 
     protected function setUp(): void
@@ -53,7 +53,7 @@ class SessionControllerTest extends WebTestCase
             'session[id_user]' => 'Testing',
         ]);
 
-        self::assertResponseRedirects('/session/');
+        self::assertResponseRedirects('/admin/session/');
 
         self::assertSame($originalNumObjectsInRepository + 1, count($this->repository->findAll()));
     }
@@ -102,7 +102,7 @@ class SessionControllerTest extends WebTestCase
             'session[id_user]' => 'Something New',
         ]);
 
-        self::assertResponseRedirects('/session/');
+        self::assertResponseRedirects('/admin/session/');
 
         $fixture = $this->repository->findAll();
 
@@ -135,6 +135,6 @@ class SessionControllerTest extends WebTestCase
         $this->client->submitForm('Delete');
 
         self::assertSame($originalNumObjectsInRepository, count($this->repository->findAll()));
-        self::assertResponseRedirects('/session/');
+        self::assertResponseRedirects('/admin/session/');
     }
 }

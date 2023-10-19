@@ -15,4 +15,10 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+    #[Route('/admin/edit_user', name: 'app_edit_user')]
+
+    public function editUser(): Response
+    {
+        dd('edit user');
+    }
 }
