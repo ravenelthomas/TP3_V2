@@ -4,10 +4,6 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-root:
-    path: /
-    controller: App\Controller\SecurityController::login
-    
 admin_route:
     path: /admin
     controller: App\Controller\AdminController::index

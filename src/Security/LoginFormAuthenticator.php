@@ -2,7 +2,6 @@
 
 namespace App\Security;
 
-
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +15,6 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-
 
 class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -45,17 +43,15 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
-    {
-        $user = $token->getUser();
+{
+    $user = $token->getUser(); // Obtenez l'utilisateur authentifié
 
-        if ($user->isAdmin()) {
-            return new RedirectResponse($this->urlGenerator->generate('admin_route'));
-        } elseif ($user->isUser()) {
-            return new RedirectResponse($this->urlGenerator->generate('user_route'));
-        }
-    
-        
+    if ($user->isAdmin()) {
+        return new RedirectResponse($this->urlGenerator->generate('admin_route'));
+    } else {
+        return new RedirectResponse($this->urlGenerator->generate('user_route'));
     }
+}
 
     protected function getLoginUrl(Request $request): string
     {

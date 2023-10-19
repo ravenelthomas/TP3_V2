@@ -174,4 +174,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->name . ' ' . $this->surname;
     }
 
+    public function isAdmin()
+    {
+        // Supposons que les rôles de l'utilisateur sont stockés dans un tableau
+        // dans la base de données.
+
+        $roles = $this->getRoles(); // Récupérer les rôles de l'utilisateur depuis la base de données.
+
+        // Vérifier si le rôle "ADMIN" est présent dans le tableau des rôles.
+        return in_array('ADMIN', $roles, true);
+    }
+
+    public function isUser()
+    {
+        
+        $roles = $this->getRoles();
+        return in_array('USER', $roles, true);
+    }
 }
