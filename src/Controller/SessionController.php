@@ -68,14 +68,4 @@ class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_session_delete', methods: ['POST'])]
-    public function delete(Request $request, Session $session, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$session->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($session);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_session_index', [], Response::HTTP_SEE_OTHER);
-    }
 }

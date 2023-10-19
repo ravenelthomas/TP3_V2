@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Session
+{% endblock %}
+
+{% block body %}
+	<h1>Edit Session</h1>
+    
+
+
+    {{ form_start(form) }}
+    
+	{{ form_end(form) }}
+
+	<a href="{{ path('app_session_index') }}" class="btn btn-secondary">Back to List</a>
+{% endblock %}
