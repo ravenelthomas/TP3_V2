@@ -10,13 +10,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('email')
-            ->add('name')
-            ->add('surname')
-        ;
-    }
+{
+    $builder
+        ->add('email', null, [
+            'attr' => ['class' => 'form-input w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500'],
+        ])
+        ->add('name', null, [
+            'attr' => ['class' => 'form-input w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500'],
+        ])
+        ->add('surname', null, [
+            'attr' => ['class' => 'form-input w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500'],
+        ]);
+}
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {

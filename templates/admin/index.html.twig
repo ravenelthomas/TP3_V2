@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!
-{% endblock %}
+{% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-	<h1>Panneau d'administration</h1>
-	<p>Bienvenue sur le panneau d'administration de l'application.</p>
-	<a href="/admin/session">Gérer les sessions</a>
-	<a href="/admin/task">Gérer les tâches</a>
-	<a href="/admin/edit_user">Gérer les utilisateurs</a>
+<div class="max-w-md mx-auto mt-8 p-8 bg-white rounded-lg shadow-lg">
+    <h1 class="text-2xl font-semibold mb-4">Panneau d'administration</h1>
+    <p class="text-gray-700 mb-4">Bienvenue sur le panneau d'administration de l'application.</p>
+    <a href="/admin/session" class="block p-3 mb-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600">Gérer les sessions</a>
+    <a href="/admin/task" class="block p-3 mb-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600">Gérer les tâches</a>
+    <a href="/admin/edit_user" class="block p-3 mb-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600">Gérer les utilisateurs</a>
+</div>
 {% endblock %}
-

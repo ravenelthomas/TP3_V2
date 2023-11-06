@@ -68,4 +68,19 @@ class SessionController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/delete', name: 'app_session_delete', methods: ['GET', 'POST'])]
+    public function delete(Request $request, Session $session, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(SessionType::class, $session);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_session_index', [], Response::HTTP_SEE_OTHER);
+    }
+    return $this->render('session/show.html.twig', [
+        'session' => $session,
+    ]);
+}
 }

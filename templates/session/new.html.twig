@@ -3,9 +3,11 @@
 {% block title %}New Session{% endblock %}
 
 {% block body %}
-    <h1>Create new Session</h1>
-
+    
+    <div class="max-w-md mx-auto mt-8 p-8 bg-white rounded-lg shadow-lg">
+    <h1 class="text-2xl font-semibold text-gray-800 mb-4">>Créer une nouvelle session</h1>
     {{ include('session/_form.html.twig') }}
-
-    <a href="{{ path('app_session_index') }}">back to list</a>
+    
+    <a href="{{ path('app_session_index') }}" >back to list</a>
+    </div>
 {% endblock %}

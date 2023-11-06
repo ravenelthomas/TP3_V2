@@ -15,14 +15,24 @@ class SessionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'fullName',
-            ])
-            ->add('start_session')
-            ->add('end_session')
-            ->add('commentary')
-            ->add('response')
+        ->add('id_user', EntityType::class, [
+            'label' => 'Utilisateurs',
+            'class' => User::class,
+            'choice_label' => 'fullName',
+            'attr' => ['class' => 'form-select w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500'],
+        ])
+        ->add('start_session', null, [
+            'attr' => ['class' => 'form-input w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500'],
+        ])
+        ->add('end_session', null, [
+            'attr' => ['class' => 'form-input w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500'],
+        ])
+        ->add('commentary', null, [
+            'attr' => ['class' => 'form-input w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500'],
+        ])
+        ->add('response', null, [
+            'attr' => ['class' => 'form-input w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-500'],
+        ])
             
         ;
     }

@@ -3,39 +3,41 @@
 {% block title %}Session index{% endblock %}
 
 {% block body %}
-    <h1>Session index</h1>
+<div class="max-w-3xl mx-auto mt-8 p-8 bg-white rounded-lg shadow-lg">
+    <h1 class="text-2xl font-semibold mb-4">Session index</h1>
 
-    <table class="table">
+    <table class="w-full border-collapse border border-gray-300">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Start_session</th>
-                <th>End_session</th>
-                <th>Commentary</th>
-                <th>Response</th>
-                <th>actions</th>
+            <tr class="bg-gray-100">
+                <th class="py-2 px-4">Id</th>
+                <th class="py-2 px-4">Start_session</th>
+                <th class="py-2 px-4">End_session</th>
+                <th class="py-2 px-4">Commentary</th>
+                <th class="py-2 px-4">Response</th>
+                <th class="py-2 px-4">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for session in sessions %}
-            <tr>
-                <td>{{ session.id }}</td>
-                <td>{{ session.startSession ? session.startSession|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ session.endSession ? session.endSession|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ session.commentary }}</td>
-                <td>{{ session.response }}</td>
-                <td>
-                    <a href="{{ path('app_session_show', {'id': session.id}) }}">show</a>
-                    <a href="{{ path('app_session_edit', {'id': session.id}) }}">edit</a>
+            <tr class="hover:bg-gray-100">
+                <td class="py-2 px-4">{{ session.id }}</td>
+                <td class="py-2 px-4">{{ session.startSession ? session.startSession|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="py-2 px-4">{{ session.endSession ? session.endSession|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="py-2 px-4">{{ session.commentary }}</td>
+                <td class="py-2 px-4">{{ session.response }}</td>
+                <td class="py-2 px-4">
+                    <a href="{{ path('app_session_show', {'id': session.id}) }}" class="text-blue-500 hover:underline">show</a>
+                    <a href="{{ path('app_session_edit', {'id': session.id}) }}" class="text-blue-500 hover:underline">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td class="py-2 px-4" colspan="6">No records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_session_new') }}">Create new</a>
+    <a href="{{ path('app_session_new') }}" class="text-blue-500 hover:underline mt-4">Create new</a>
+</div>
 {% endblock %}
