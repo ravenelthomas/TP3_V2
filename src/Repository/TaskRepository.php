@@ -45,4 +45,12 @@ class TaskRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findBySession(int $sessionId){
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.id_session = :val')
+            ->setParameter('val', $sessionId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

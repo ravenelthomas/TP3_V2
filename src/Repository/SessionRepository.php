@@ -45,4 +45,12 @@ class SessionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findByUser(int $userId){
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.id_user = :val')
+            ->setParameter('val', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
+    } 
 }

@@ -62,4 +62,10 @@ class Task
 
         return $this;
     }
+    public function setDone(bool $done): static
+    {
+        $this->done = $done;
+        
+        return $this;
+    }
 }
