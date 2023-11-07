@@ -31,17 +31,18 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/delete_user/{id}', methods: ['POST', 'GET'])]
-
+    #[Route('/admin/delete_user/{id}', name: 'delete_user', methods: ['POST', 'GET'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+    
             $entityManager->remove($user);
             $entityManager->flush();
         }
+    
         return $this->redirectToRoute('app_admin');
-
     }
+
     #[Route('/user/task_done/{idSession}', name: 'task_done', methods: ['POST'])]
 public function setTaskDone(Request $request, TaskRepository $taskRepository, EntityManagerInterface $entityManager, int $idSession): Response
 {
