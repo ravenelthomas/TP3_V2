@@ -78,9 +78,9 @@ class SessionController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_session_index', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('session/show.html.twig', [
+            'session' => $session,
+        ]);
     }
-    return $this->render('session/show.html.twig', [
-        'session' => $session,
-    ]);
-}
 }

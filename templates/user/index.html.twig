@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block body%}
+<h1> Bienvenue {{user.surname}} {{user.name}} </h1>
+<p>Voici les tâches que vous avez à faire :</p>
+<ul>
+    {% for task in tasks %}
+    <li>
+        <input type="checkbox" name="task_{{task.id}}" id="task_{{task.id}}">
+        {{task.name}} : {{task.description}}
+    </li>
+    {% endfor %}
+{% endblock %}

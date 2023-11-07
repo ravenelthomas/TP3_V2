@@ -192,4 +192,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles = $this->getRoles();
         return in_array('USER', $roles, true);
     }
+
+    // public function getSession(Session $session): ?Session
+    // {
+    //     return $session;
+    // }
+    
+
 }

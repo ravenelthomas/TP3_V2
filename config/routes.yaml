@@ -12,3 +12,6 @@ user_route:
     path: /user
     controller: App\Controller\UserController::index
 
+main_route:
+    path: /
+    controller: App\Controller\RegistrationController::register 
