@@ -138,4 +138,18 @@ class Session
         return $this;
     }
 
+    public function changeStartTime(\DateTimeInterface $start_session): static
+    {
+        $this->start_session = $start_session;
+
+        return $this;
+    }
+
+    public function changeEndTime(\DateTimeInterface $end_session): static
+    {
+        $this->end_session = $end_session;
+
+        return $this;
+    }
+
 }

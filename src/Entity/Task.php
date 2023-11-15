@@ -22,6 +22,12 @@ class Task
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $done = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+  
+
     public function getId(): ?int
     {
         return $this->id;
@@ -67,5 +73,10 @@ class Task
         $this->done = $done;
         
         return $this;
+    }
+
+    public function getDone(): ?string
+    {
+        return $this->done;
     }
 }

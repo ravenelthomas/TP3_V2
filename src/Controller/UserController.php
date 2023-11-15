@@ -35,30 +35,39 @@ class UserController extends AbstractController
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-    
+
             $entityManager->remove($user);
             $entityManager->flush();
         }
-    
+
         return $this->redirectToRoute('app_admin');
     }
 
     #[Route('/user/task_done/{idSession}', name: 'task_done', methods: ['POST'])]
-public function setTaskDone(Request $request, TaskRepository $taskRepository, EntityManagerInterface $entityManager, int $idSession): Response
-{
-    $tasks = $taskRepository->find($request->request->get('task'));
-    if (is_array($tasks) && count($tasks) > 0 && is_object($tasks[0])) {
-        foreach($tasks as $task) {
-            $task->setDone(true);
-            $entityManager->persist($task);
+    public function setTaskDone(Request $request, TaskRepository $taskRepository, EntityManagerInterface $entityManager, int $idSession): Response
+    {
+        $tasks = $request->request->get('task');
+        if(is_array($tasks)){
+            foreach ($tasks as $task) {
+
+                if ($task) {
+                    $task->setDone(true);
+                    $entityManager->persist($task);
+                    $entityManager->flush();
+                    
+                }
+            }
         }
-    } else {
-        $tasks->setDone(true);
-        $entityManager->persist($tasks);
+        else{
+            $task = $taskRepository->find($tasks);
+            if ($task) {
+                $task->setDone(true);
+                $entityManager->persist($task);
+                $entityManager->flush();
+                
+            }
+        }
+        return $this->redirectToRoute('user_dashboard');
+
     }
-
-    return $this->redirectToRoute('user_dashboard');
-}
-
-
 }
