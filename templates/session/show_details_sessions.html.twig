@@ -32,9 +32,9 @@
                         <li class="mt-2">
                             <label for="task_{{ task.id }}" class="cursor-pointer">
                                 {% if task.done == 1 %}
-                                    <input type="checkbox" name="task" value="{{ task.id }}" id="task_{{ task.id }}" class="mr-2" onclick="this.form.submit()" checked>
+                                    <input type="checkbox" name="task[]" value="{{ task.id }}" id="task_{{ task.id }}" class="mr-2" onclick="this.form.submit()" checked>
                                 {% else %}
-                                    <input type="checkbox" name="task" value="{{ task.id }}" id="task_{{ task.id }}" class="mr-2" onclick="this.form.submit()">
+                                    <input type="checkbox" name="task[]" value="{{ task.id }}" id="task_{{ task.id }}" class="mr-2" onclick="this.form.submit()">
                                 {% endif %}
                                 {{ task.name }}
                                 :

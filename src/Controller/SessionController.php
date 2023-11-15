@@ -93,11 +93,9 @@ class SessionController extends AbstractController
         $session->setInSession(true);
         $entityManager->persist($session);
         $entityManager->flush();
-        return $this->render('session/show_details_sessions.html.twig', [
-            'session' => $session,
-            'startDate' => $startDate,
-            'isCurrent' => true,
-            'tasks' => $session->getTasks(),
+        return $this->redirectToRoute('app_session_current', [
+            'id' => $session->getId(),
+            'startDate' => $startDate->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -117,5 +115,16 @@ class SessionController extends AbstractController
             'session' => $session,
         ]);
     }
-    
+
+    #[Route('/app_session_current/{id}', 'app_session_current', methods: ['GET', 'POST'])]
+    public function showCurrentSession(Request $request, Session $session, EntityManagerInterface $entityManager): Response
+    {
+        $startDate = $session->getStartSession();
+        return $this->render('session/show_details_sessions.html.twig', [
+            'session' => $session,
+            'startDate' => $startDate,
+            'isCurrent' => true,
+            'tasks' => $session->getTasks(),
+        ]);
+    }
 }

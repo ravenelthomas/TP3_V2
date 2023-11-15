@@ -38,6 +38,9 @@ class Session
     #[ORM\Column(nullable: true)]
     private ?bool $inSession = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $completed = null;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -163,6 +166,18 @@ class Session
     public function setInSession(?bool $inSession): static
     {
         $this->inSession = $inSession;
+
+        return $this;
+    }
+
+    public function isCompleted(): ?bool
+    {
+        return $this->completed;
+    }
+
+    public function setCompleted(?bool $completed): static
+    {
+        $this->completed = $completed;
 
         return $this;
     }
