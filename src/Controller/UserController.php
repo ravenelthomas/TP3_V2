@@ -16,18 +16,28 @@ class UserController extends AbstractController
     #[Route('/user', name: 'user_dashboard')]
     public function index(SessionRepository $sessionRepository, TaskRepository $taskRepository): Response
     {
+
         $user = $this->getUser();
         $allSessionForUser = $sessionRepository->findByUser($user->getId());
+        $isCurrent = [];
+        $sessionCurrent = false;
         if (empty($allSessionForUser)) {
             $allTaskForSession = [];
+            $isCurrent = [false];
         } else {
             $allTaskForSession = $taskRepository->findBySession($allSessionForUser[0]->getId());
+            foreach($allSessionForUser as $sessionUser){
+                array_push($isCurrent, $sessionUser->isInSession());
+            }
+            // $isCurrent = [$allSessionForUser[0]->isInSession(), $allSessionForUser[0]->getId()];
         }
+        
         return $this->render('user/index.html.twig', [
             'controller_name' => 'UserController',
             'tasks' => $allTaskForSession,
             'sessions' => $allSessionForUser,
             'user' => $user,
+            'isCurrent' => $isCurrent,
         ]);
     }
 

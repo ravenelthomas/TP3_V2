@@ -35,6 +35,9 @@ class Session
     #[ORM\OneToMany(mappedBy: 'id_session', targetEntity: Task::class)]
     private Collection $tasks;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $inSession = null;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -152,4 +155,16 @@ class Session
         return $this;
     }
 
+    public function isInSession(): ?bool
+    {
+        return $this->inSession;
+    }
+
+    public function setInSession(?bool $inSession): static
+    {
+        $this->inSession = $inSession;
+
+        return $this;
+    }
+    
 }

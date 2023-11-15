@@ -88,7 +88,7 @@ class SessionController extends AbstractController
     public function startSession(Request $request, Session $session, EntityManagerInterface $entityManager): Response
     {
         $session->changeStartTime(new \DateTime());
-        $session->inSession(true);
+        $session->setInSession(true);
         $entityManager->persist($session);
         $entityManager->flush();
         return $this->redirectToRoute('user_dashboard', [], Response::HTTP_SEE_OTHER);
@@ -98,8 +98,17 @@ class SessionController extends AbstractController
     public function stopSession(Request $request, Session $session, EntityManagerInterface $entityManager): Response
     {
         $session->changeEndTime(new \DateTime());
+        $session->setInSession(false);
         $entityManager->persist($session);
         $entityManager->flush();
         return $this->redirectToRoute('user_dashboard', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/app_session_show/{id}', 'app_session_show', methods: ['GET', 'POST'])]
+    public function showSession(Request $request, Session $session, EntityManagerInterface $entityManager): Response
+    {
+        return $this->render('session/show.html.twig', [
+            'session' => $session,
+        ]);
+    }
+    
 }
