@@ -17,6 +17,7 @@ class SessionController extends AbstractController
     #[Route('/admin/session/', name: 'app_session_index', methods: ['GET'])]
     public function index(SessionRepository $sessionRepository): Response
     {
+        
         return $this->render('session/index.html.twig', [
             'sessions' => $sessionRepository->findAll(),
         ]);
@@ -86,12 +87,18 @@ class SessionController extends AbstractController
     #[Route('/start_session/{id}', 'start_session', methods: ['GET', 'POST'])]
 
     public function startSession(Request $request, Session $session, EntityManagerInterface $entityManager): Response
-    {
-        $session->changeStartTime(new \DateTime());
+    {   
+        $startDate = new \DateTime();
+        $session->changeStartTime($startDate);
         $session->setInSession(true);
         $entityManager->persist($session);
         $entityManager->flush();
-        return $this->redirectToRoute('user_dashboard', [], Response::HTTP_SEE_OTHER);
+        return $this->render('session/show_details_sessions.html.twig', [
+            'session' => $session,
+            'startDate' => $startDate,
+            'isCurrent' => true,
+            'tasks' => $session->getTasks(),
+        ]);
     }
 
     #[Route('/stop_session/{id}', 'stop_session', methods: ['GET', 'POST'])]

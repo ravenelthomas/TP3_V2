@@ -1,72 +1,74 @@
-{# {% extends 'base.html.twig' %}
+
+{% extends 'base.html.twig' %}
+
 
 {% block body %}
-
-{% block javascript %}
-    <script>
-        function chrono(startTime) {
-            console.log(startTime);
-            console.log('chrono started');
-            var start = new Date(startTime);
-            function updateTimer() {
-                var now = new Date();
-                var diff = now - start;
-                var msec = diff;
-                var hh = Math.floor(msec / 1000 / 60 / 60);
-                msec -= hh * 1000 * 60 * 60;
-                var mm = Math.floor(msec / 1000 / 60);
-                msec -= mm * 1000 * 60;
-                var ss = Math.floor(msec / 1000);
-                msec -= ss * 1000;
-
-                document.getElementById("time").innerHTML = hh + ":" + mm + ":" + ss;
-            }
-
-            setInterval(updateTimer, 1000);
-        }
-        chrono(new Date());
-    </script>
-{% endblock %}
-<div class="mb-8 p-4 border border-gray-300 rounded-lg">
-    <p>
-        <strong>Début :</strong>
-        {{ session.startSession|date('d/m/Y H:i') }}<br>
-        <strong>Fin :</strong>
-        {{ session.endSession|date('d/m/Y H:i') }}
-    </p>
-    {% if isCurrent[loop.index0] == true %}
-        <p id="time" onload="chrono('{{ session.startSession|date('Y-m-d H:i:s') }}')">
-            Durée de session :
+    
+    <div class="mb-8 p-4 border border-gray-300 rounded-lg">
+        <p>
+            <strong>Début :</strong>
+            {{ session.startSession|date('d/m/Y H:i') }}<br>
+            <strong>Fin :</strong>
+            {{ session.endSession|date('d/m/Y H:i') }}
         </p>
-        <a href="{{ path('stop_session', {'id': session.id}) }}" class="mt-4 inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-            Arrêter la session
-        </a>
-    {% else %}
-        <a href="{{ path('start_session', {'id': session.id}) }}" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Commencer la session
-        </a>
-    {% endif %}
-    <p class="mt-4">Vous devrez réaliser les tâches suivantes :</p>
+        {% if isCurrent is defined and isCurrent == true %}
+            <p id="time" onload="chrono('{{ session.startSession|date('Y-m-d H:i:s') }}')">
+                Durée de session :
+            </p>
+            <a href="{{ path('stop_session', {'id': session.id}) }}" class="mt-4 inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Arrêter la session
+            </a>
+        {% else %}
+            <a href="{{ path('start_session', {'id': session.id}) }}" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Commencer la session
+            </a>
+        {% endif %}
+        <p class="mt-4">Vous devrez réaliser les tâches suivantes :</p>
 
-    <ul class="list-none pl-6">
-        <form action="{{ path('task_done', {'idSession': session.id}) }}" method="post">
-            {% for task in tasks %}
-                {% if task.idSession.id == session.id %}
-                    <li class="mt-2">
-                        <label for="task_{{ task.id }}" class="cursor-pointer">
-                            {% if task.done == 1 %}
-                                <input type="checkbox" name="task" value="{{ task.id }}" id="task_{{ task.id }}" class="mr-2" onclick="this.form.submit()" checked>
-                            {% else %}
-                                <input type="checkbox" name="task" value="{{ task.id }}" id="task_{{ task.id }}" class="mr-2" onclick="this.form.submit()">
-                            {% endif %}
-                            {{ task.name }}
-                            :
-                            {{ task.description }}
-                        </label>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </form>
-    </ul>
-</div>
-{% endblock %} #}
+        <ul class="list-none pl-6">
+            <form action="{{ path('task_done', {'idSession': session.id}) }}" method="post">
+                {% for task in tasks %}
+                    {% if task.idSession.id == session.id %}
+                        <li class="mt-2">
+                            <label for="task_{{ task.id }}" class="cursor-pointer">
+                                {% if task.done == 1 %}
+                                    <input type="checkbox" name="task" value="{{ task.id }}" id="task_{{ task.id }}" class="mr-2" onclick="this.form.submit()" checked>
+                                {% else %}
+                                    <input type="checkbox" name="task" value="{{ task.id }}" id="task_{{ task.id }}" class="mr-2" onclick="this.form.submit()">
+                                {% endif %}
+                                {{ task.name }}
+                                :
+                                {{ task.description }}
+                            </label>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </form>
+        </ul>
+    </div>
+{% endblock %}
+{% block javascripts %}
+        <script>
+            function chrono(startTime) {
+                console.log(startTime);
+                console.log('chrono started');
+                var start = new Date(startTime);
+                function updateTimer() {
+                    var now = new Date();
+                    var diff = now - start;
+                    var msec = diff;
+                    var hh = Math.floor(msec / 1000 / 60 / 60);
+                    msec -= hh * 1000 * 60 * 60;
+                    var mm = Math.floor(msec / 1000 / 60);
+                    msec -= mm * 1000 * 60;
+                    var ss = Math.floor(msec / 1000);
+                    msec -= ss * 1000;
+
+                    document.getElementById("time").innerHTML = hh + ":" + mm + ":" + ss;
+                }
+
+                setInterval(updateTimer, 1000);
+            }
+            chrono(new Date());
+        </script>
+    {% endblock %}

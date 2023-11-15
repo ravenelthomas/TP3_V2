@@ -25,6 +25,9 @@
                     <a href="{{ path('stop_session', {'id': session.id}) }}" class="mt-4 inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                         Arrêter la session
                     </a>
+					<a href="{{ path('view_detail', {'id': session.id}) }}" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+						Voir les détails
+					</a>
                 {% else %}
                     <a href="{{ path('start_session', {'id': session.id}) }}" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Commencer la session
