@@ -58,14 +58,14 @@ class AdminController extends AbstractController
             'label' => 'Modifier',
             'attr' => ['class' => 'btn btn-primary'],
         ]);
-        // $form->handleRequest($request);
+        $form->handleRequest($request);
 
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $entityManager->persist($user);
-        //     $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($user);
+            $entityManager->flush();
             
-        //     return $this->redirectToRoute('app_edit_user', [], Response::HTTP_SEE_OTHER);
-        // }
+            return $this->redirectToRoute('app_edit_user', [], Response::HTTP_SEE_OTHER);
+        }
     
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),

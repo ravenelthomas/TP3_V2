@@ -49,26 +49,35 @@
 {% endblock %}
 {% block javascripts %}
         <script>
-            function chrono(startTime) {
-                console.log(startTime);
-                console.log('chrono started');
-                var start = new Date(startTime);
-                function updateTimer() {
-                    var now = new Date();
-                    var diff = now - start;
-                    var msec = diff;
-                    var hh = Math.floor(msec / 1000 / 60 / 60);
-                    msec -= hh * 1000 * 60 * 60;
-                    var mm = Math.floor(msec / 1000 / 60);
-                    msec -= mm * 1000 * 60;
-                    var ss = Math.floor(msec / 1000);
-                    msec -= ss * 1000;
+    function chrono() {
+        console.log('chrono started');
+        var startTime;
+        var storedTime = localStorage.getItem('startTime');
 
-                    document.getElementById("time").innerHTML = hh + ":" + mm + ":" + ss;
-                }
+        if (storedTime) {
+            startTime = new Date(storedTime);
+        } else {
+            startTime = new Date();
+            localStorage.setItem('startTime', startTime);
+        }
 
-                setInterval(updateTimer, 1000);
-            }
-            chrono(new Date());
-        </script>
+        function updateTimer() {
+            var now = new Date();
+            var diff = now - startTime;
+            var msec = diff;
+            var hh = Math.floor(msec / 1000 / 60 / 60);
+            msec -= hh * 1000 * 60 * 60;
+            var mm = Math.floor(msec / 1000 / 60);
+            msec -= mm * 1000 * 60;
+            var ss = Math.floor(msec / 1000);
+            msec -= ss * 1000;
+
+            document.getElementById("time").innerHTML = "La session a démarré depuis : " + hh + ":" + mm + ":" + ss;
+        }
+
+        setInterval(updateTimer, 1000);
+    }
+    
+    chrono();
+</script>
     {% endblock %}
