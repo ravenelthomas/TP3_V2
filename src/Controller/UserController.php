@@ -20,14 +20,17 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $allSessionForUser = $sessionRepository->findByUser($user->getId());
         $isCurrent = [];
+        $isCompleted = [];
         $sessionCurrent = false;
         if (empty($allSessionForUser)) {
             $allTaskForSession = [];
             $isCurrent = [false];
+            $isCompleted = [false];
         } else {
             $allTaskForSession = $taskRepository->findBySession($allSessionForUser[0]->getId());
             foreach($allSessionForUser as $sessionUser){
                 array_push($isCurrent, $sessionUser->isInSession());
+                array_push($isCompleted, $sessionUser->isCompleted());
             }
             // $isCurrent = [$allSessionForUser[0]->isInSession(), $allSessionForUser[0]->getId()];
         }
@@ -38,6 +41,7 @@ class UserController extends AbstractController
             'sessions' => $allSessionForUser,
             'user' => $user,
             'isCurrent' => $isCurrent,
+            'isCompleted' => $isCompleted,
         ]);
     }
 

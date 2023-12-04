@@ -104,6 +104,7 @@ class SessionController extends AbstractController
     {
         $session->changeEndTime(new \DateTime());
         $session->setInSession(false);
+        $session->setCompleted(true);
         $entityManager->persist($session);
         $entityManager->flush();
         return $this->redirectToRoute('user_dashboard', [], Response::HTTP_SEE_OTHER);
