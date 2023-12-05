@@ -35,6 +35,12 @@ class Session
     #[ORM\OneToMany(mappedBy: 'id_session', targetEntity: Task::class)]
     private Collection $tasks;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $inSession = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $completed = null;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -138,4 +144,42 @@ class Session
         return $this;
     }
 
+    public function changeStartTime(\DateTimeInterface $start_session): static
+    {
+        $this->start_session = $start_session;
+
+        return $this;
+    }
+
+    public function changeEndTime(\DateTimeInterface $end_session): static
+    {
+        $this->end_session = $end_session;
+
+        return $this;
+    }
+
+    public function isInSession(): ?bool
+    {
+        return $this->inSession;
+    }
+
+    public function setInSession(?bool $inSession): static
+    {
+        $this->inSession = $inSession;
+
+        return $this;
+    }
+
+    public function isCompleted(): ?bool
+    {
+        return $this->completed;
+    }
+
+    public function setCompleted(?bool $completed): static
+    {
+        $this->completed = $completed;
+
+        return $this;
+    }
+    
 }

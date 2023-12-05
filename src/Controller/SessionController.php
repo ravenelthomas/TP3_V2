@@ -11,18 +11,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/session')]
+
 class SessionController extends AbstractController
 {
-    #[Route('/', name: 'app_session_index', methods: ['GET'])]
+    #[Route('/admin/session/', name: 'app_session_index', methods: ['GET'])]
     public function index(SessionRepository $sessionRepository): Response
     {
+        
         return $this->render('session/index.html.twig', [
             'sessions' => $sessionRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'app_session_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/session/new', name: 'app_session_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $session = new Session();
@@ -42,7 +43,7 @@ class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_session_show', methods: ['GET'])]
+    #[Route('/admin/session/{id}', name: 'app_session_show', methods: ['GET'])]
     public function show(Session $session): Response
     {
         return $this->render('session/show.html.twig', [
@@ -50,7 +51,7 @@ class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_session_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/session/{id}/edit', name: 'app_session_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Session $session, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(SessionType::class, $session);
@@ -68,7 +69,7 @@ class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_session_delete', methods: ['GET', 'POST'])]
+    #[Route('/admin/session/{id}/delete', name: 'app_session_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, Session $session, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(SessionType::class, $session);
@@ -81,6 +82,50 @@ class SessionController extends AbstractController
         }
         return $this->render('session/show.html.twig', [
             'session' => $session,
+        ]);
+    }
+    #[Route('/start_session/{id}', 'start_session', methods: ['GET', 'POST'])]
+
+    public function startSession(Request $request, Session $session, EntityManagerInterface $entityManager): Response
+    {   
+        $startDate = new \DateTime();
+        $session->changeStartTime($startDate);
+        $session->setInSession(true);
+        $entityManager->persist($session);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_session_current', [
+            'id' => $session->getId(),
+            'startDate' => $startDate->format('Y-m-d H:i:s'),
+        ]);
+    }
+
+    #[Route('/stop_session/{id}', 'stop_session', methods: ['GET', 'POST'])]
+    public function stopSession(Request $request, Session $session, EntityManagerInterface $entityManager): Response
+    {
+        $session->changeEndTime(new \DateTime());
+        $session->setInSession(false);
+        $session->setCompleted(true);
+        $entityManager->persist($session);
+        $entityManager->flush();
+        return $this->redirectToRoute('user_dashboard', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/app_session_show/{id}', 'app_session_show', methods: ['GET', 'POST'])]
+    public function showSession(Request $request, Session $session, EntityManagerInterface $entityManager): Response
+    {
+        return $this->render('session/show.html.twig', [
+            'session' => $session,
+        ]);
+    }
+
+    #[Route('/app_session_current/{id}', 'app_session_current', methods: ['GET', 'POST'])]
+    public function showCurrentSession(Request $request, Session $session, EntityManagerInterface $entityManager): Response
+    {
+        $startDate = $session->getStartSession();
+        return $this->render('session/show_details_sessions.html.twig', [
+            'session' => $session,
+            'startDate' => $startDate,
+            'isCurrent' => true,
+            'tasks' => $session->getTasks(),
         ]);
     }
 }
